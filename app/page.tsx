@@ -1,6 +1,7 @@
 import Container from "@/components/Container/Container";
 import MarketOverview from "@/components/MarketOverview/MarketOverview";
 import QuickConverter from "@/components/QuickConverter/QuickConverter";
+import CompareTool from "@/components/CompareTool/CompareTool";
 import CoinsTable from "@/components/CoinsTable/CoinsTable";
 import NewsSection from "@/components/NewsSection/NewsSection";
 import { getMarkets } from "@/lib/api/coingecko";
@@ -11,8 +12,11 @@ import { getNews } from "@/lib/api/news";
 // isso não gasta chamadas extras e um erro não fica preso por muito tempo.
 export const revalidate = 60;
 
+const COMPARE_COINS = 100; // quantas moedas aparecem na lista do comparador
+
 export default async function Home() {
   const [markets, news] = await Promise.all([getMarkets(), getNews()]);
+  const errorKind = markets.ok ? null : markets.error;
 
   // O conversor só precisa destes 4 campos de cada moeda.
   const converterCoins = markets.ok
@@ -25,6 +29,8 @@ export default async function Home() {
         })
       )
     : [];
+
+  const compareCoins = markets.ok ? markets.data.slice(0, COMPARE_COINS) : [];
 
   return (
     <Container className="flex flex-col gap-10 py-8">
@@ -40,12 +46,15 @@ export default async function Home() {
         )}
         <MarketOverview markets={markets} news={news} />
       </div>
-      <div id="conversor" className="scroll-mt-4">
-        <QuickConverter
-          coins={converterCoins}
-          errorKind={markets.ok ? null : markets.error}
-        />
+
+      {/* Os ids e o data-highlight-on-scroll são usados pelos links do menu (SmoothAnchors). */}
+      <div id="conversor" data-highlight-on-scroll className="scroll-mt-4">
+        <QuickConverter coins={converterCoins} errorKind={errorKind} />
       </div>
+      <div id="comparar" data-highlight-on-scroll className="scroll-mt-4">
+        <CompareTool coins={compareCoins} errorKind={errorKind} />
+      </div>
+
       <CoinsTable markets={markets} />
       <NewsSection news={news} />
     </Container>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import OfflineNotice from "@/components/OfflineNotice/OfflineNotice";
+import SmoothAnchors from "@/components/SmoothAnchors/SmoothAnchors";
 import Navbar from "@/components/Navbar/Navbar";
 import MarketStatsBar from "@/components/MarketStatsBar/MarketStatsBar";
 import Footer from "@/components/Footer/Footer";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="pt-BR" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <OfflineNotice />
+        <SmoothAnchors />
         <Navbar />
         <MarketStatsBar />
         <main id="conteudo" className="flex-1">
