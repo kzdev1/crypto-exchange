@@ -3,21 +3,31 @@
 import { useState } from "react";
 import Card from "./Card";
 import CoinRow from "./CoinRow";
-import { gainers, losers } from "./mock-data";
+import ErrorNotice from "../ErrorNotice/ErrorNotice";
 import { focusRing } from "../Navbar/navStyles";
 
-const tabs = [
-  { id: "gainers", label: "Altas", coins: gainers },
-  { id: "losers", label: "Baixas", coins: losers },
-];
+const TITLE = "Maiores altas e baixas";
 
-export default function GainersLosersCard() {
+export default function GainersLossersCard({ gainers, losers, errorKind }) {
   const [activeId, setActiveId] = useState("gainers");
+
+  if (errorKind) {
+    return (
+      <Card title={TITLE} headingId="gainers-losers-title">
+        <ErrorNotice kind={errorKind} title="Não foi possível carregar" />
+      </Card>
+    );
+  }
+
+  const tabs = [
+    { id: "gainers", label: "Altas", coins: gainers },
+    { id: "losers", label: "Baixas", coins: losers },
+  ];
   const activeTab = tabs.find((tab) => tab.id === activeId);
 
   return (
     <Card
-      title="Maiores altas e baixas"
+      title={TITLE}
       headingId="gainers-losers-title"
       action={
         <div
@@ -31,7 +41,7 @@ export default function GainersLosersCard() {
               type="button"
               aria-pressed={tab.id === activeId}
               onClick={() => setActiveId(tab.id)}
-              className={`rounded px-2 py-1 text-xs font-medium ${focusRing} ${
+              className={`rounded px-2 py-0.5 text-xs font-medium ${focusRing} ${
                 tab.id === activeId
                   ? "bg-neutral-900 text-white"
                   : "text-neutral-600 hover:text-neutral-900"

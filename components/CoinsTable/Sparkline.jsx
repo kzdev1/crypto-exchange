@@ -1,9 +1,11 @@
-// Mini gráfico de linha em SVG. Recebe só a lista de valores e a descrição.
+import { toneStroke } from "../MarketOverview/tones";
+
+// Mini gráfico de linha em SVG. A cor vem da tendência (tone).
 const WIDTH = 100;
 const HEIGHT = 32;
 const PADDING = 2;
 
-export default function Sparkline({ data, label }) {
+export default function Sparkline({ data, label, tone = "neutral" }) {
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range = max - min || 1;
@@ -23,7 +25,7 @@ export default function Sparkline({ data, label }) {
       aria-label={label}
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       preserveAspectRatio="none"
-      className="h-8 w-28 text-neutral-700"
+      className={`h-6 w-24 ${toneStroke[tone]}`}
     >
       <polyline
         points={points}

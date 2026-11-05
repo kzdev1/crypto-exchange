@@ -1,13 +1,21 @@
 import { formatPercent } from "./format";
+import { toneFromValue, toneText } from "./tones";
 
-// Mostra a variação com seta e texto, não só com cor.
+const symbols = { positive: "▲", negative: "▼", neutral: "–" };
+const descriptions = {
+  positive: "alta de",
+  negative: "queda de",
+  neutral: "variação de",
+};
+
+// Variação em %, com cor E seta/texto (a cor nunca é o único sinal).
 export default function Variation({ value }) {
-  const isUp = value >= 0;
+  const tone = toneFromValue(value);
 
   return (
-    <span className="whitespace-nowrap text-sm font-medium text-neutral-900">
-      <span aria-hidden="true">{isUp ? "▲" : "▼"}</span>{" "}
-      <span className="sr-only">{isUp ? "alta de" : "queda de"}</span>
+    <span className={`whitespace-nowrap text-sm font-medium ${toneText[tone]}`}>
+      <span aria-hidden="true">{symbols[tone]}</span>{" "}
+      <span className="sr-only">{descriptions[tone]}</span>
       {formatPercent(Math.abs(value))}
     </span>
   );

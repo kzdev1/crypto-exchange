@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Container from "../Container/Container";
 import NavDropdown from "./NavDropdown";
 import { navItems } from "./nav-links";
 import { navLink, dropdownLink, focusRing } from "./navStyles";
@@ -36,7 +37,7 @@ export default function Navbar() {
       </a>
 
       <header className="border-b border-neutral-200 bg-white">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
+        <Container className="flex h-16 items-center gap-8">
           <Link
             href="/"
             className={`rounded-md text-lg font-semibold tracking-tight text-neutral-900 ${focusRing}`}
@@ -70,7 +71,7 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="ml-auto hidden items-center gap-2 md:flex">
             <div role="search">
               <label htmlFor="busca" className="sr-only">
                 Buscar criptomoedas
@@ -99,7 +100,7 @@ export default function Navbar() {
             aria-controls="menu-mobile"
             aria-label={isMobileOpen ? "Fechar menu" : "Abrir menu"}
             onClick={() => setIsMobileOpen((open) => !open)}
-            className={`rounded-md p-2 text-neutral-900 md:hidden ${focusRing}`}
+            className={`ml-auto rounded-md p-2 text-neutral-900 md:hidden ${focusRing}`}
           >
             <svg
               aria-hidden="true"
@@ -117,7 +118,7 @@ export default function Navbar() {
               )}
             </svg>
           </button>
-        </div>
+        </Container>
 
         {isMobileOpen && (
           <nav
@@ -125,7 +126,7 @@ export default function Navbar() {
             aria-label="Menu principal"
             className="border-t border-neutral-200 md:hidden"
           >
-            <ul className="space-y-4 px-4 py-4 sm:px-6">
+            <Container as="ul" className="space-y-4 py-4">
               {navItems.map((item) => (
                 <li key={item.id}>
                   {item.links ? (
@@ -146,14 +147,14 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block rounded-md px-3 py-1 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+                      className={`block rounded-md px-3 py-1 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 ${focusRing}`}
                     >
                       {item.label}
                     </Link>
                   )}
                 </li>
               ))}
-            </ul>
+            </Container>
           </nav>
         )}
       </header>

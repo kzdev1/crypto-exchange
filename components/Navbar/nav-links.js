@@ -7,16 +7,15 @@ export const navItems = [
     label: "Criptomoedas",
     links: [
       { label: "Por capitalização", href: "/criptomoedas" },
-      { label: "Categorias", href: "/categorias" },
-      { label: "Em alta", href: "/em-alta" },
-      { label: "Maiores altas e baixas", href: "/altas-e-baixas" },
+      { label: "Em alta", href: "/criptomoedas?ordem=volume" },
+      { label: "Maiores altas e baixas", href: "/criptomoedas?ordem=alta" },
     ],
   },
   {
     id: "ferramentas",
     label: "Ferramentas",
     links: [
-      { label: "Conversor", href: "/conversor" },
+      { label: "Conversor", href: "/#conversor" },
       { label: "Comparar moedas", href: "/comparar" },
     ],
   },

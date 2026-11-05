@@ -13,9 +13,8 @@ export const footerColumns = [
     title: "Explorar",
     links: [
       { label: "Criptomoedas", href: "/criptomoedas" },
-      { label: "Categorias", href: "/categorias" },
-      { label: "Em alta", href: "/em-alta" },
-      { label: "Conversor", href: "/conversor" },
+      { label: "Em alta", href: "/criptomoedas?ordem=volume" },
+      { label: "Conversor", href: "/#conversor" },
       { label: "Notícias", href: "/noticias/mercado" },
     ],
   },

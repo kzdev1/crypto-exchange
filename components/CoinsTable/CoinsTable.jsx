@@ -1,6 +1,10 @@
+import Link from "next/link";
 import CoinTableRow from "./CoinTableRow";
-import { coins } from "./mock-coins";
+import ErrorNotice from "../ErrorNotice/ErrorNotice";
 import { focusRing } from "../Navbar/navStyles";
+
+// Quantas moedas aparecem na página inicial. O ranking completo fica em /criptomoedas.
+const VISIBLE_ROWS = 10;
 
 // Para adicionar ou remover uma coluna, edite esta lista
 // e a linha correspondente em CoinTableRow.jsx.
@@ -16,7 +20,8 @@ const columns = [
 
 const alignClass = { left: "text-left", right: "text-right" };
 
-export default function CoinsTable() {
+// `markets` é o resultado de getMarkets(): { ok, data } ou { ok: false, error }.
+export default function CoinsTable({ markets }) {
   return (
     <section aria-labelledby="coins-table-title">
       <h2
@@ -26,6 +31,23 @@ export default function CoinsTable() {
         Preços por capitalização de mercado
       </h2>
 
+      {markets.ok ? (
+        <TableContent coins={markets.data.slice(0, VISIBLE_ROWS)} />
+      ) : (
+        <div className="mt-4">
+          <ErrorNotice
+            kind={markets.error}
+            title="Não foi possível carregar os preços"
+          />
+        </div>
+      )}
+    </section>
+  );
+}
+
+function TableContent({ coins }) {
+  return (
+    <>
       <div
         role="region"
         aria-labelledby="coins-table-title"
@@ -43,7 +65,7 @@ export default function CoinsTable() {
                 <th
                   key={column.id}
                   scope="col"
-                  className={`px-3 py-3 text-xs font-medium text-neutral-600 ${
+                  className={`px-3 py-2 text-xs font-medium text-neutral-600 ${
                     alignClass[column.align]
                   }`}
                 >
@@ -59,6 +81,15 @@ export default function CoinsTable() {
           </tbody>
         </table>
       </div>
-    </section>
+
+      <div className="mt-4 flex justify-center">
+        <Link
+          href="/criptomoedas"
+          className={`rounded-md bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-200 ${focusRing}`}
+        >
+          Ver todas as criptomoedas
+        </Link>
+      </div>
+    </>
   );
 }

@@ -1,15 +1,19 @@
 import Variation from "../MarketOverview/Variation";
 import { formatBRL, formatCompactBRL } from "../MarketOverview/format";
+import { toneFromValue } from "../MarketOverview/tones";
 import Sparkline from "./Sparkline";
 
-const cell = "px-3 py-3";
+const cell = "px-3 py-2";
+const trendNames = { positive: "alta", negative: "queda", neutral: "estabilidade" };
 
 // A ordem das células segue a ordem das colunas em CoinsTable.jsx.
 export default function CoinTableRow({ coin }) {
-  const isUp = coin.sparkline.at(-1) >= coin.sparkline[0];
-  const chartLabel = `Gráfico dos últimos 7 dias de ${coin.name}, tendência de ${
-    isUp ? "alta" : "queda"
-  }`;
+  // Algumas moedas podem vir sem dados de gráfico; nesse caso o gráfico some.
+  const hasChart = coin.sparkline.length > 1;
+  const trend = hasChart
+    ? toneFromValue(coin.sparkline.at(-1) - coin.sparkline[0])
+    : "neutral";
+  const chartLabel = `Gráfico dos últimos 7 dias de ${coin.name}, tendência de ${trendNames[trend]}`;
 
   return (
     <tr className="border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50">
@@ -26,7 +30,9 @@ export default function CoinTableRow({ coin }) {
       </td>
       <td className={cell}>
         <div className="flex justify-end">
-          <Sparkline data={coin.sparkline} label={chartLabel} />
+          {hasChart && (
+            <Sparkline data={coin.sparkline} label={chartLabel} tone={trend} />
+          )}
         </div>
       </td>
       <td className={`${cell} text-right text-neutral-900`}>

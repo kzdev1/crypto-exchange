@@ -1,7 +1,7 @@
 "use client";
 
-
 import Link from "next/link";
+import Container from "../Container/Container";
 import { footerColumns, projectInfo, disclaimer } from "./footer-links";
 import { focusRing } from "../Navbar/navStyles";
 
@@ -32,8 +32,8 @@ function FooterLink({ link }) {
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-neutral-200 bg-neutral-50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <footer className="mt-10 border-t border-neutral-200 bg-neutral-50">
+      <Container className="py-10">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div>
             <Link
@@ -68,14 +68,14 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 space-y-2 border-t border-neutral-200 pt-6 text-xs text-neutral-600">
+        <div className="mt-8 space-y-2 border-t border-neutral-200 pt-6 text-xs text-neutral-600">
           <p className="max-w-3xl">{disclaimer}</p>
           <p>
             © {new Date().getFullYear()} {projectInfo.name}. Projeto de
             portfólio.
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
