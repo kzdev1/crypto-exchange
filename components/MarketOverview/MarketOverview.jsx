@@ -11,6 +11,7 @@ const toRowCoin = (coin) => ({
   symbol: coin.symbol,
   name: coin.name,
   price: coin.price,
+  image: coin.image,
   change: coin.change24h,
 });
 

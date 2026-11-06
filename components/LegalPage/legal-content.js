@@ -38,7 +38,7 @@ export const legalDocuments = {
       {
         heading: "Serviços de terceiros",
         paragraphs: [
-          "Preços e dados de mercado vêm da CoinGecko, o índice Medo e Ganância vem do Alternative.me, as notícias vêm de feeds públicos de sites de notícias e as manchetes em inglês são traduzidas automaticamente pelo DeepL. Essas consultas são feitas pelo servidor do site, e não pelo seu navegador, e envolvem apenas informações públicas, como o título de uma notícia. Nenhum dado seu é enviado a esses serviços.",
+          "Preços e dados de mercado vêm da CoinGecko, o índice Medo e Ganância vem do Alternative.me, as notícias vêm de feeds públicos de sites de notícias e as manchetes em inglês são traduzidas automaticamente pelo DeepL. Essas consultas são feitas pelo servidor do site, e não pelo seu navegador, e envolvem apenas informações públicas, como o título de uma notícia. Nenhum dado seu é enviado a esses serviços. Os ícones das moedas também são baixados pelo servidor e entregues ao seu navegador a partir do próprio site.",
           "Ao clicar em links externos (matérias, fontes, GitHub, LinkedIn), você sai do site e passa a estar sujeito à política de privacidade de cada um deles.",
         ],
       },

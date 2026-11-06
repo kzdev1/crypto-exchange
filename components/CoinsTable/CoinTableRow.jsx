@@ -1,3 +1,4 @@
+import CoinIcon from "../CoinIcon/CoinIcon";
 import Variation from "../MarketOverview/Variation";
 import { formatBRL, formatCompactBRL } from "../MarketOverview/format";
 import { toneFromValue } from "../MarketOverview/tones";
@@ -19,8 +20,13 @@ export default function CoinTableRow({ coin }) {
     <tr className="border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50">
       <td className={`${cell} text-neutral-600`}>{coin.rank}</td>
       <th scope="row" className={`${cell} text-left font-normal`}>
-        <span className="font-semibold text-neutral-900">{coin.name}</span>{" "}
-        <span className="text-neutral-600">{coin.symbol}</span>
+        <span className="flex items-center gap-2">
+          <CoinIcon src={coin.image} symbol={coin.symbol} />
+          <span>
+            <span className="font-semibold text-neutral-900">{coin.name}</span>{" "}
+            <span className="text-neutral-600">{coin.symbol}</span>
+          </span>
+        </span>
       </th>
       <td className={`${cell} text-right text-neutral-900`}>
         {formatBRL(coin.price)}

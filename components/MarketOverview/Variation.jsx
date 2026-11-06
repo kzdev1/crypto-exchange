@@ -1,5 +1,6 @@
 import { formatPercent } from "./format";
 import { toneFromValue, toneText } from "./tones";
+import CoinIcon from "../CoinIcon/CoinIcon";
 
 const symbols = { positive: "▲", negative: "▼", neutral: "–" };
 const descriptions = {

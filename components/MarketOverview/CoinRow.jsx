@@ -1,3 +1,4 @@
+import CoinIcon from "../CoinIcon/CoinIcon";
 import Variation from "./Variation";
 import { formatBRL } from "./format";
 
@@ -7,6 +8,7 @@ export default function CoinRow({ rank, coin }) {
     <li className="flex items-center justify-between gap-2 py-2 text-sm">
       <span className="flex items-center gap-2">
         <span className="w-4 text-neutral-600">{rank}</span>
+        <CoinIcon src={coin.image} symbol={coin.symbol} size={20} />
         <span className="font-semibold text-neutral-900">{coin.symbol}</span>
         <span className="sr-only">{coin.name}</span>
       </span>
