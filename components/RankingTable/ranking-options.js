@@ -1,4 +1,4 @@
-// Regras da página de ranking: ordens disponíveis, tamanho da página e links.
+// Regras da página de ranking: ordens disponíveis, busca, tamanho da página e links.
 // Para adicionar uma ordem, inclua-a em SORTS e em `comparers`.
 
 export const PAGE_SIZE = 50;
@@ -29,6 +29,21 @@ export function sortCoins(coins, sortId) {
   return [...coins].sort(comparers[sortId]);
 }
 
+// Tira acentos e maiúsculas, para "ethéreum" e "ETHEREUM" acharem o mesmo.
+const normalizeText = (text) =>
+  text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+
+// Moedas cujo nome ou sigla contém o texto buscado. Sem texto, devolve todas.
+export function filterCoins(coins, query) {
+  if (!query) return coins;
+  const needle = normalizeText(query);
+  return coins.filter(
+    (coin) =>
+      normalizeText(coin.name).includes(needle) ||
+      normalizeText(coin.symbol).includes(needle)
+  );
+}
+
 // Número da página vindo da URL, sempre entre 1 e o total de páginas.
 export function parsePage(value, totalPages) {
   const page = Number.parseInt(value, 10);
@@ -36,10 +51,11 @@ export function parsePage(value, totalPages) {
   return Math.min(page, totalPages);
 }
 
-export function buildHref(sortId, page) {
+export function buildHref(sortId, page, query = "") {
   const params = new URLSearchParams();
+  if (query) params.set("busca", query);
   if (sortId !== DEFAULT_SORT) params.set("ordem", sortId);
   if (page > 1) params.set("pagina", String(page));
-  const query = params.toString();
-  return query ? `/criptomoedas?${query}` : "/criptomoedas";
+  const text = params.toString();
+  return text ? `/criptomoedas?${text}` : "/criptomoedas";
 }
