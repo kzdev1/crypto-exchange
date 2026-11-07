@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Container from "../Container/Container";
 import NavDropdown from "./NavDropdown";
+import SearchForm from "./SearchForm";
 import { navItems } from "./nav-links";
 import { navLink, dropdownLink, focusRing } from "./navStyles";
 
@@ -72,17 +73,7 @@ export default function Navbar() {
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex">
-            <div role="search">
-              <label htmlFor="busca" className="sr-only">
-                Buscar criptomoedas
-              </label>
-              <input
-                id="busca"
-                type="search"
-                placeholder="Buscar"
-                className={`w-44 rounded-md border border-neutral-500 bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 ${focusRing}`}
-              />
-            </div>
+            <SearchForm id="busca" />
             <button type="button" className={navLink}>
               Entrar
             </button>
@@ -126,34 +117,37 @@ export default function Navbar() {
             aria-label="Menu principal"
             className="border-t border-neutral-200 md:hidden"
           >
-            <Container as="ul" className="space-y-4 py-4">
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  {item.links ? (
-                    <>
-                      <p className="px-3 py-1 text-sm font-semibold text-neutral-900">
+            <Container className="py-4">
+              <SearchForm id="busca-mobile" />
+              <ul className="mt-4 space-y-4">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    {item.links ? (
+                      <>
+                        <p className="px-3 py-1 text-sm font-semibold text-neutral-900">
+                          {item.label}
+                        </p>
+                        <ul>
+                          {item.links.map((link) => (
+                            <li key={link.href}>
+                              <Link href={link.href} className={dropdownLink}>
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className={`block rounded-md px-3 py-1 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 ${focusRing}`}
+                      >
                         {item.label}
-                      </p>
-                      <ul>
-                        {item.links.map((link) => (
-                          <li key={link.href}>
-                            <Link href={link.href} className={dropdownLink}>
-                              {link.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className={`block rounded-md px-3 py-1 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 ${focusRing}`}
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Container>
           </nav>
         )}

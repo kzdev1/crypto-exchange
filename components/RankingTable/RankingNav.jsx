@@ -7,8 +7,8 @@ const activeLink = "border-neutral-900 bg-neutral-900 text-white";
 const idleLink =
   "border-neutral-500 text-neutral-700 hover:border-neutral-900 hover:text-neutral-900";
 
-// Links para trocar a ordem do ranking.
-export function SortNav({ activeSort }) {
+// Links para trocar a ordem do ranking (a busca é mantida).
+export function SortNav({ activeSort, query = "" }) {
   return (
     <nav aria-label="Ordenar ranking" className="flex flex-wrap items-center gap-2">
       <span className="text-sm text-neutral-600">Ordenar por</span>
@@ -17,7 +17,7 @@ export function SortNav({ activeSort }) {
         return (
           <Link
             key={sort.id}
-            href={buildHref(sort.id, 1)}
+            href={buildHref(sort.id, 1, query)}
             aria-current={isActive ? "true" : undefined}
             className={`${baseLink} ${isActive ? activeLink : idleLink}`}
           >
@@ -29,8 +29,8 @@ export function SortNav({ activeSort }) {
   );
 }
 
-// Links das páginas do ranking.
-export function Pagination({ sortId, page, totalPages }) {
+// Links das páginas do ranking (a busca e a ordem são mantidas).
+export function Pagination({ sortId, page, totalPages, query = "" }) {
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -41,14 +41,14 @@ export function Pagination({ sortId, page, totalPages }) {
       className="mt-6 flex flex-wrap items-center justify-center gap-2"
     >
       {page > 1 && (
-        <Link href={buildHref(sortId, page - 1)} rel="prev" className={`${baseLink} ${idleLink}`}>
+        <Link href={buildHref(sortId, page - 1, query)} rel="prev" className={`${baseLink} ${idleLink}`}>
           Anterior
         </Link>
       )}
       {pages.map((number) => (
         <Link
           key={number}
-          href={buildHref(sortId, number)}
+          href={buildHref(sortId, number, query)}
           aria-label={`Página ${number}`}
           aria-current={number === page ? "page" : undefined}
           className={`${baseLink} ${number === page ? activeLink : idleLink}`}
@@ -57,7 +57,7 @@ export function Pagination({ sortId, page, totalPages }) {
         </Link>
       ))}
       {page < totalPages && (
-        <Link href={buildHref(sortId, page + 1)} rel="next" className={`${baseLink} ${idleLink}`}>
+        <Link href={buildHref(sortId, page + 1, query)} rel="next" className={`${baseLink} ${idleLink}`}>
           Próxima
         </Link>
       )}

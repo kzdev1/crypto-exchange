@@ -42,7 +42,11 @@ export default function NewsCard({ news, errorKind }) {
             >
               <span className="line-clamp-1 text-sm font-medium text-neutral-900">
                 {item.title}
-                <span className="sr-only"> (abre em nova aba)</span>
+                <span className="sr-only">
+                  {item.sourceLanguage === "en"
+                    ? " (abre em nova aba; matéria em inglês)"
+                    : " (abre em nova aba)"}
+                </span>
               </span>
               <span
                 lang="pt-BR"

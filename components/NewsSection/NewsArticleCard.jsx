@@ -14,13 +14,18 @@ export default function NewsArticleCard({ news }) {
           className={`rounded-md after:absolute after:inset-0 hover:underline ${focusRing}`}
         >
           {news.title}
-          <span className="sr-only"> (abre em nova aba)</span>
+          <span className="sr-only">
+            {news.sourceLanguage === "en"
+              ? " (abre em nova aba; matéria em inglês)"
+              : " (abre em nova aba)"}
+          </span>
         </a>
       </h3>
 
       <p className="mt-auto flex flex-wrap gap-x-3 gap-y-1 text-xs text-neutral-600">
         <span className="font-medium text-neutral-900">{news.source}</span>
         <span>{news.categories[0]}</span>
+        {news.translated && <span>Traduzido automaticamente</span>}
         {news.language === "en" && <span>Em inglês</span>}
         <span>{news.time}</span>
       </p>
