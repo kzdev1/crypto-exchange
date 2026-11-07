@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Fonte do site: a Inter, carregada no layout.tsx. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  color-scheme: light;
+}
+
+/* Scroll suave (desligado para quem pede menos movimento no sistema). */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #171717;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Transições curtas em links, botões e campos, para a troca de cor não ser brusca.
+   Fica na camada "base", então qualquer `transition-*` de um componente tem prioridade. */
+@layer base {
+  a,
+  button,
+  input,
+  select {
+    transition-property: color, background-color, border-color, box-shadow, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a,
+  button,
+  input,
+  select {
+    transition: none;
+  }
+}
+
+/* Destaque de uma ferramenta quando o menu leva até ela (veja SmoothAnchors.jsx):
+   contorno preto e um leve aumento, que voltam ao normal sozinhos. */
+[data-highlight-on-scroll] {
+  border-radius: 0.75rem;
+  outline: 3px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 200ms ease, transform 300ms ease;
+}
+
+[data-highlight-on-scroll][data-highlighted="true"] {
+  outline-color: #171717;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-highlight-on-scroll][data-highlighted="true"] {
+    transform: scale(1.02);
+  }
 }
